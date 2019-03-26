@@ -2,7 +2,7 @@ var compo = compo || {}
 compo = {
 		cust_login_form : ()=>{
 			return '<h2>Login Form</h2>'
-			+'<form action="/action_page.php">'
+			+'<form>'
 			+'  <div class="imgcontainer">'
 			+'    <img src="img_avatar2.png" alt="Avatar" class="avatar">'
 			+'  </div>'

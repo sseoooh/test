@@ -7,16 +7,13 @@ app = (()=>{
 		setContentView();
 	};
 	let setContentView=()=>{
-		$('.act_menu1').empty().text('뭔데?')
-		$('.act_menu2').empty().text('뭔데?1')
-		$('.act_menu3').empty().text('뭔데?2')
-		$('.act_menu4').empty().text('뭔데?3')
 		$.when(
 			$.getScript($.js()+'/component/compo.js'),
 			$.getScript($.js()+'/customer/cust.js'),
-			$.getScript($.js()+'/employee/emp.js')
+			$.getScript($.js()+'/employee/emp.js'),
+			$.getScript($.js()+'/common/auth.js')
 		).done(()=>{
-			cust.permission.login();
+			auth.permission.login();
 		});
 	};
 	return {init: init,

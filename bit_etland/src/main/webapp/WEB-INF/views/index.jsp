@@ -42,10 +42,10 @@
     <div id="left_content" class="col-sm-3 sidenav">
       <h4>John's Blog</h4>
       <ul class="nav nav-pills nav-stacked">
-        <li class="act_menu1"><a href="#section1">Home</a></li>
-        <li class="act_menu2"><a href="#section2">Friends</a></li>
-        <li class="act_menu3"><a href="#section3">Family</a></li>
-        <li class="act_menu4"><a href="#section3">Family</a></li>
+        <li><a href="#section1">Home</a></li>
+        <li><a href="#section2">Friends</a></li>
+        <li><a href="#section3">Family</a></li>
+        <li><a href="#section3">photo</a></li>
       </ul><br>
       <div class="input-group">
         <input type="text" class="form-control" placeholder="Search Blog..">
@@ -129,6 +129,7 @@
 <script src="<%=application.getContextPath()%>/resources/js/component/compo.js"></script>
 <script src="<%=application.getContextPath()%>/resources/js/employee/emp.js"></script>
 <script src="<%=application.getContextPath()%>/resources/js/customer/cust.js"></script>
+<script src="<%=application.getContextPath()%>/resources/js/common/auth.js"></script>
 <script>
 app.init('<%=application.getContextPath()%>');
 </script>	
