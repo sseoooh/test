@@ -16,7 +16,7 @@ public class CommonController {
 	
 	@GetMapping("/")
 	public String home(@ModelAttribute Customer param) {
-		logger.info("\n --------- Welcome {} !! ----------\n");
+		
 		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		return "index";
 	}

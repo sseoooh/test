@@ -18,10 +18,10 @@ public class CustController {
 	@Autowired Customer cust;
 	
 	@PostMapping("/login")
-	public @ResponseBody Customer login(@RequestBody Customer param) {
+	public @ResponseBody Customer member(@RequestBody Customer param) {
 	
 		System.out.println("------------커스텀진입----------------");
-		
+		System.out.println(param.toString());
 		return null;
 	}
 	
