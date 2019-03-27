@@ -17,7 +17,7 @@ public class CommonController {
 	@GetMapping("/")
 	public String home(@ModelAttribute Customer param) {
 		
-		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+		System.out.println("CommonController에 진입::::::::::::::::::");
 		return "index";
 	}
 

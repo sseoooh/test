@@ -74,12 +74,19 @@ auth = (()=>{
                 type: 'post',
                 data: JSON.stringify(data),
                 dataType: 'json',
-                contentType: 'application/json',
+                contentType: 'application/json; charset=UTF-8',
                 success: d=>{
-                    alert('success     '+ d.customerID);
+                	if(d.customerID!=''){
+                		  alert('성공:'+ d.customerID);
+                		  $('#right_content').empty();
+                		  $(compo.cust_mypage()).appendTo('#right_content');
+                	}else{
+                		 alert('실패');
+                	}
+                  
                 },
                 error: e=>{
-                    alert('실패');
+                   alert('실패');
                 }
             });
         });    
