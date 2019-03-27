@@ -21,9 +21,14 @@ auth = (()=>{
     let setContentView =()=>{
         $.getScript($.js()+'/component/compo.js')
         .done(()=>{
-            $('#right_content').empty();
-            $(compo.cust_login_form()).appendTo('#right_content');
-            login();
+        	 $('#right_content').empty();
+             $(compo.cust_login_form()).appendTo('#right_content');
+        	$('form button[type=submit]').click(e=>{  
+        		e.preventDefault();
+        		login();
+        		});
+           
+            
             $('#left_content ul').empty();
             let arr = [
                 {val:'회원 로그인', name:'login'},
@@ -41,7 +46,11 @@ auth = (()=>{
                         case 'login' :
                             $('#right_content').empty();
                             $(compo.cust_login_form()).appendTo('#right_content');
-                            login();
+                            $('form button[type=submit]').click(e=>{  
+                        		e.preventDefault();
+                        		login();
+                        		});
+                           
                             break;
                         case 'join' :
                             $('#right_content').empty();
@@ -66,7 +75,7 @@ auth = (()=>{
         });
     };
     let login =()=>{
-        $('form button[type=submit]').click(()=>{    
+         
             let data = {customerID:$('form input[name=uname]').val(),
                         password:$('form input[name=psw]').val()};
             $.ajax({
@@ -79,6 +88,7 @@ auth = (()=>{
                 	if(d.customerID!=''){
                 		  alert('성공:'+ d.customerID);
                 		  $('#right_content').empty();
+                		  
                 		  $(compo.cust_mypage()).appendTo('#right_content');
                 	}else{
                 		 alert('실패');
@@ -89,7 +99,7 @@ auth = (()=>{
                    alert('실패');
                 }
             });
-        });    
+          
     };
    let join =()=>{};
    let register =()=>{};
