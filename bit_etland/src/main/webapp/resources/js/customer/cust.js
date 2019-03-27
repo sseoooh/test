@@ -1,4 +1,4 @@
-var cust = cust || {}
+/*var cust = cust || {}
 cust.permission =(()=>{
 	let login =()=>{
 		
@@ -40,4 +40,4 @@ cust.permission =(()=>{
 		join : join,
 		mypage : mypage
 	};
-})();
+})();*/

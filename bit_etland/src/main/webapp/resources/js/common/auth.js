@@ -1,43 +1,29 @@
 var auth = auth || {}
-auth.permission = (()=>{
+auth = (()=>{
 /*    let _ = $.ctx();
     let js = $.js();
     let comopjs = $.js()+'/component/compo.js';
     let rightCtnt = $('#right_content');
     */
+    let _,js,compojs,r_cnt, l_cnt;
     let init =()=>{
-    
+          _ = $.ctx();
+          js = $.js();
+          compojs = js+'/component/compo.js';
+          r_cnt = '#right_content';
+          l_cnt = '#left_content';
         onCreate();
     };
+    
     let onCreate =()=>{
         setContentView();
-    };
+        };
     let setContentView =()=>{
-        
-    };
-    let login =()=>{
         $.getScript($.js()+'/component/compo.js')
         .done(()=>{
-            $('#right_content').html(compo.cust_login_form());
-            $('form button[type=submit]').click(()=>{
-
-                let data = {customerID:$('form input[name=uname]').val(),
-                        password:$('form input[name=psw]').val()};
-                $.ajax({
-                    url: $.ctx()+'/cust/login',
-                    type: 'post',
-                    data: JSON.stringify(data),
-                    dataType: 'json',
-                    contentType: 'application/json; charset=UTF-8',
-                    success: d=>{
-                        alert('성공');
-                    },
-                    error: e=>{
-                        alert('실패');
-                    }
-                });
-            });    
-       
+            $('#right_content').empty();
+            $(compo.cust_login_form()).appendTo('#right_content');
+            login();
             $('#left_content ul').empty();
             let arr = [
                 {val:'회원 로그인', name:'login'},
@@ -55,6 +41,7 @@ auth.permission = (()=>{
                         case 'login' :
                             $('#right_content').empty();
                             $(compo.cust_login_form()).appendTo('#right_content');
+                            login();
                             break;
                         case 'join' :
                             $('#right_content').empty();
@@ -78,14 +65,28 @@ auth.permission = (()=>{
             alert('component/compo.js 를 찾지 못했습니다.');
         });
     };
-    let join =()=>{
-        
+    let login =()=>{
+        $('form button[type=submit]').click(()=>{    
+            let data = {customerID:$('form input[name=uname]').val(),
+                        password:$('form input[name=psw]').val()};
+            $.ajax({
+                url: $.ctx()+'/cust/login',
+                type: 'post',
+                data: JSON.stringify(data),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: d=>{
+                    alert('success     '+ d.customerID);
+                },
+                error: e=>{
+                    alert('실패');
+                }
+            });
+        });    
     };
-    let mypage =()=>{};
-    return {
-        login : login,
-        join : join,
-        mypage : mypage
-    };
+   let join =()=>{};
+   let register =()=>{};
+   let access =()=>{};
+    return {init:init};
     
 })();
