@@ -27,7 +27,10 @@ auth = (()=>{
         		e.preventDefault();
         		login();
         		});
-           
+        	
+        	
+        	
+        
             
             $('#left_content ul').empty();
             let arr = [
@@ -55,6 +58,10 @@ auth = (()=>{
                         case 'join' :
                             $('#right_content').empty();
                             $(compo.cust_join_form()).appendTo('#right_content');
+                            $('form button[type=button]').click(e=>{
+                            	e.preventDefault();
+                        		join();
+                            });
                             break;
                         case 'access' :
                             $('#right_content').empty();
@@ -74,12 +81,11 @@ auth = (()=>{
             alert('component/compo.js 를 찾지 못했습니다.');
         });
     };
-    let login =()=>{
-         
+    let login =()=>{         
             let data = {customerID:$('form input[name=uname]').val(),
                         password:$('form input[name=psw]').val()};
             $.ajax({
-                url: $.ctx()+'/cust/login',
+                url: $.ctx()+'/users/cust/'+data.customerID,
                 type: 'post',
                 data: JSON.stringify(data),
                 dataType: 'json',
@@ -88,8 +94,8 @@ auth = (()=>{
                 	if(d.customerID!=''){
                 		  alert('성공:'+ d.customerID);
                 		  $('#right_content').empty();
-                		  
-                		  $(compo.cust_mypage()).appendTo('#right_content');
+                		
+                		  cust.init();
                 	}else{
                 		 alert('실패');
                 	}
@@ -101,9 +107,105 @@ auth = (()=>{
             });
           
     };
-   let join =()=>{};
-   let register =()=>{};
-   let access =()=>{};
+   let join =()=>{	  
+	   let data = {customerID:$('form input[name=id]').val(),			   
+			   		customerName:$('form input[name=name]').val(),
+	   				password:$('form input[name=password]').val(),
+			   		ssn:$('form input[name=ssn').val(),
+   					photo:$('form input[name=photo]').val(),
+					phone:$('form input[name=phone]').val(),
+				 	city:$('form input[name=city]').val(),
+					address:$('form input[name=address]').val(),
+					postalcode:$('form input[name=postalcode]').val()};
+					
+	   $.ajax({
+           url: $.ctx()+'/users/join',
+           type: 'post',
+           data: JSON.stringify(data),
+           dataType: 'json',
+           contentType: 'application/json; charset=UTF-8',
+           success: d=>{
+        	   if(d.msg==='SUCCESS'){	  
+        		   alert('회원가입성공:'+ d.msg);
+        		   $(compo.cust_mypage()).appendTo('#right_content');
+           		   $('form button[type=submit]').click(e=>{  
+            		e.preventDefault();
+            		login();
+           		});
+           	}else{
+           		 alert('회원가입실패');
+           		$(compo.cust_join_form()).appendTo('#right_content');
+           		join();
+           	}
+             
+           },
+           error: e=>{
+              alert('실패');
+           }
+       });
+   };
+   let register =()=>{
+	   let data = {employeeID:$('form input[name=employeeID]').val(),			   
+		   		name:$('form input[name=name]').val(),
+		   		manager:$('form input[name=manager]').val(),		   	
+		   		birthDate:$('form input[name=birthDate]').val(),
+		   		photo:$('form input[name=photo]').val(),
+		   		notes:$('form input[name=notes]').val(),};
+  			
+				
+  $.ajax({
+      url: $.ctx()+'/users/emp',
+      type: 'post',
+      data: JSON.stringify(data),
+      dataType: 'json',
+      contentType: 'application/json; charset=UTF-8',
+      success: d=>{
+   	   if(d.msg==='SUCCESS'){	  
+   		   alert('회원가입성공:'+ d.msg);
+   		   $(compo.cust_mypage()).appendTo('#right_content');
+      		   $('form button[type=submit]').click(e=>{  
+       		e.preventDefault();
+       		login();
+      		});
+      	}else{
+      		 alert('회원가입실패');
+      		$(compo.cust_join_form()).appendTo('#right_content');
+      		join();
+      	}
+        
+      },
+      error: e=>{
+         alert('실패');
+      }
+  });
+   };
+   
+ 
+   let access =()=>{
+	   let data = {employeeID:$('form input[name=employeeID]').val(),
+			   	name:$('form input[name=name]').val()};
+   $.ajax({
+       url: $.ctx()+'/users/cust/'+data.customerID,
+       type: 'post',
+       data: JSON.stringify(data),
+       dataType: 'json',
+       contentType: 'application/json; charset=UTF-8',
+       success: d=>{
+       	if(d.customerID!=''){
+       		  alert('성공:'+ d.customerID);
+       		  $('#right_content').empty();
+       		  
+       		  $(compo.emp_register_form()).appendTo('#right_content');
+       	}else{
+       		 alert('실패');
+       	}
+         
+       },
+       error: e=>{
+          alert('실패');
+       }
+   });
+   };
     return {init:init};
     
 })();

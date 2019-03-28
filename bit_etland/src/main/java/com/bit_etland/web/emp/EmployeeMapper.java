@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeMapper {
 	public void insertEmployee(Employee emp);
-	public List<Employee> selectAllEmployeeList(Map<?,?> m);
-	public List<Employee> selectEmployees(Map<?,?> m);
-	public Employee selectEmployee(Map<?,?> m);
-	public int countEmployees(Map<?,?> m);
+	public List<Employee> selectAllEmployeeList(Map<?,?> map);
+	public List<Employee> selectEmployees(Map<?,?> map);
+	public Employee selectEmployee(Employee emp);
+	public int countEmployees(Map<?,?> map);
 	public boolean existsEmployee(Employee emp);
 	public void updateEmployee(Employee emp);
 	public void deleteEmployee(Employee emp);
