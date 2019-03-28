@@ -18,7 +18,7 @@ import com.bit_etland.web.cmm.Users;
 
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usera")
 public class EmployeeController {
 	
 	@Autowired Employee emp;

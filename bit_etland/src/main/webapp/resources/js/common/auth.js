@@ -27,12 +27,8 @@ auth = (()=>{
         		e.preventDefault();
         		login();
         		});
-        	
-        	
-        	
-        
-            
-            $('#left_content ul').empty();
+
+        	$('#left_content ul').empty();
             let arr = [
                 {val:'회원 로그인', name:'login'},
                 {val:'회원 가입', name:'join'},
@@ -58,8 +54,9 @@ auth = (()=>{
                         case 'join' :
                             $('#right_content').empty();
                             $(compo.cust_join_form()).appendTo('#right_content');
-                            $('form button[type=button]').click(e=>{
+                            $('form button[type=submit]').click(e=>{
                             	e.preventDefault();
+                            	alert('들어옴')	
                         		join();
                             });
                             break;
@@ -117,9 +114,9 @@ auth = (()=>{
 				 	city:$('form input[name=city]').val(),
 					address:$('form input[name=address]').val(),
 					postalcode:$('form input[name=postalcode]').val()};
-					
+				alert(data.ssn)	
 	   $.ajax({
-           url: $.ctx()+'/users/join',
+           url: $.ctx()+'/users/cust',
            type: 'post',
            data: JSON.stringify(data),
            dataType: 'json',

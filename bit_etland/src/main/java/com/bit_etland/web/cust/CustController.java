@@ -25,6 +25,7 @@ import com.bit_etland.web.emp.EmployeeMapper;
 @RestController
 @RequestMapping("/users")
 public class CustController {
+	
 	static final Logger logger = LoggerFactory.getLogger(CustController.class);
 
 	@Autowired Customer cust;
@@ -38,6 +39,7 @@ public class CustController {
 	public Customer login(
 						@PathVariable String userid,
 						@RequestBody Customer param) {
+		System.out.println("CustController탐?");
 		IFunction i = (Object o) -> custMap.selectCustomer((Customer)param);
 		return (Customer)i.apply(param);
 	}
