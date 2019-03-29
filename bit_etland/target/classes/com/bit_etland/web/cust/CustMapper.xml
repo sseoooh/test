@@ -46,7 +46,7 @@
            						 #{photo},
            						 #{city},
            						 #{address},
-           						 #{postalcode}
+           						 #{postalcode})
 	</insert>
     <update
 		  id="updateCustomer"

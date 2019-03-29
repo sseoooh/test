@@ -23,7 +23,7 @@ import com.bit_etland.web.emp.EmployeeMapper;
 
 
 @RestController
-@RequestMapping("/users")
+
 public class CustController {
 	
 	static final Logger logger = LoggerFactory.getLogger(CustController.class);
@@ -39,14 +39,14 @@ public class CustController {
 	public Customer login(
 						@PathVariable String userid,
 						@RequestBody Customer param) {
-		System.out.println("CustController탐?");
+		
+		System.out.println("CustController안에 login 진입:"+param);
 		IFunction i = (Object o) -> custMap.selectCustomer((Customer)param);
 		return (Customer)i.apply(param);
 	}
 	
 	@PostMapping("/cust")
 	public Map<?, ?> join(
-			@PathVariable String user,
 			@RequestBody Customer param) {
 		System.out.println("CustController안에 join 진입:"+param);
 		IConsumer i = (Object o) -> custMap.insertCustomer(param);
@@ -56,11 +56,11 @@ public class CustController {
 			return map;
 	}
 	
-	@PutMapping("/{user}/{userid}")
+	@PutMapping("/cust/{userid}")
 	public Map<?, ?> update(		
 			@PathVariable String userid,
 			@RequestBody Customer param) {
-		System.out.println("CustController안에 join 진입:"+param);
+		System.out.println("CustController안에 update 진입:"+param);
 		IConsumer i = (Object o) -> custMap.updateCustomer(param);
 		i.accept(param);
 		map.clear();
@@ -68,11 +68,11 @@ public class CustController {
 		return map;
 	}
 	
-	@DeleteMapping("/{user}/{userid}")
+	@DeleteMapping("/cust/{userid}")
 	public Map<?,?> delete(			
 			@PathVariable String userid,
 			@RequestBody Customer param) {
-		System.out.println("CustController안에 join 진입:"+param);
+		System.out.println("CustController안에 delete 진입:"+param);
 		IConsumer i = (Object o) -> custMap.deleteCustomer(param);;
 		i.accept(param);
 		map.clear();

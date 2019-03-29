@@ -10,11 +10,12 @@ auth = (()=>{
           _ = $.ctx();
           js = $.js();
           compojs = js+'/component/compo.js';
+          prodjs = js+'/prod/prod.js';
           r_cnt = '#right_content';
           l_cnt = '#left_content';
         onCreate();
     };
-    
+
     let onCreate =()=>{
         setContentView();
         };
@@ -29,6 +30,7 @@ auth = (()=>{
         		});
 
         	$('#left_content ul').empty();
+        	$('#left_content h4').html('전서우 고객님 접속중');
             let arr = [
                 {val:'회원 로그인', name:'login'},
                 {val:'회원 가입', name:'join'},
@@ -41,6 +43,8 @@ auth = (()=>{
                     .appendTo('#left_content ul')
                     .click(function(){
                         let that = $(this).attr('name');
+                        $(this).addClass('active');
+                        $(this).siblings().removeClass('active');
                         switch(that){
                         case 'login' :
                             $('#right_content').empty();
@@ -56,7 +60,6 @@ auth = (()=>{
                             $(compo.cust_join_form()).appendTo('#right_content');
                             $('form button[type=submit]').click(e=>{
                             	e.preventDefault();
-                            	alert('들어옴')	
                         		join();
                             });
                             break;
@@ -82,19 +85,23 @@ auth = (()=>{
             let data = {customerID:$('form input[name=uname]').val(),
                         password:$('form input[name=psw]').val()};
             $.ajax({
-                url: $.ctx()+'/users/cust/'+data.customerID,
+                url: $.ctx()+'/cust/'+data.customerID,
                 type: 'post',
                 data: JSON.stringify(data),
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
                 success: d=>{
+                	
                 	if(d.customerID!=''){
-                		  alert('성공:'+ d.customerID);
-                		  $('#right_content').empty();
-                		
-                		  cust.init();
+                		 $.getScript($.js()+'/customer/cust.js')
+                		 .done(()=>{
+                		cust.init();
+         		        });
+                		  alert('로그인성공:'+ d.customerID);
+                		  /*$('#right_content').empty();*/
+                		  
                 	}else{
-                		 alert('실패');
+                		 alert('로그인실패');
                 	}
                   
                 },
@@ -123,12 +130,9 @@ auth = (()=>{
            contentType: 'application/json; charset=UTF-8',
            success: d=>{
         	   if(d.msg==='SUCCESS'){	  
-        		   alert('회원가입성공:'+ d.msg);
-        		   $(compo.cust_mypage()).appendTo('#right_content');
-           		   $('form button[type=submit]').click(e=>{  
-            		e.preventDefault();
-            		login();
-           		});
+        		   alert('회원가입이성공했습니다:'+ d.msg);
+        		   $('#right_content').empty();
+        		   $(compo.cust_login_form()).appendTo('#right_content');           		
            	}else{
            		 alert('회원가입실패');
            		$(compo.cust_join_form()).appendTo('#right_content');
