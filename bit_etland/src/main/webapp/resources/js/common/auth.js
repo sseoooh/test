@@ -86,6 +86,7 @@ auth = (()=>{
             alert('component/compo.js 를 찾지 못했습니다.');
         });
     };
+    /*ddfd*/
     let login =()=>{
             let data = {customerID:$('form input[name=uname]').val(),
                         password:$('form input[name=psw]').val()};
