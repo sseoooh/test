@@ -66,6 +66,11 @@ auth = (()=>{
                         case 'access' :
                             $('#right_content').empty();
                             $(compo.emp_access_form()).appendTo('#right_content');
+                            $('#access_btn').click(e=>{
+                            	e.preventDefault();
+                            	alert('사원접속');
+                            	access();
+                            });
                             break;
                         case 'registe' :
                             $('#right_content').empty();
@@ -81,7 +86,7 @@ auth = (()=>{
             alert('component/compo.js 를 찾지 못했습니다.');
         });
     };
-    let login =()=>{         
+    let login =()=>{
             let data = {customerID:$('form input[name=uname]').val(),
                         password:$('form input[name=psw]').val()};
             $.ajax({
@@ -91,7 +96,7 @@ auth = (()=>{
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
                 success: d=>{
-                	
+                		alert(d.customerID);
                 	if(d.customerID!=''){
                 		 $.getScript($.js()+'/customer/cust.js')
                 		 .done(()=>{
@@ -109,9 +114,8 @@ auth = (()=>{
                    alert('실패');
                 }
             });
-          
     };
-   let join =()=>{	  
+   let join =()=>{
 	   let data = {customerID:$('form input[name=id]').val(),			   
 			   		customerName:$('form input[name=name]').val(),
 	   				password:$('form input[name=password]').val(),
@@ -123,7 +127,7 @@ auth = (()=>{
 					postalcode:$('form input[name=postalcode]').val()};
 				alert(data.ssn)	
 	   $.ajax({
-           url: $.ctx()+'/users/cust',
+           url: $.ctx()+'/cust',
            type: 'post',
            data: JSON.stringify(data),
            dataType: 'json',
@@ -181,32 +185,37 @@ auth = (()=>{
   });
    };
    
- 
    let access =()=>{
-	   let data = {employeeID:$('form input[name=employeeID]').val(),
-			   	name:$('form input[name=name]').val()};
-   $.ajax({
-       url: $.ctx()+'/users/cust/'+data.customerID,
-       type: 'post',
-       data: JSON.stringify(data),
-       dataType: 'json',
-       contentType: 'application/json; charset=UTF-8',
-       success: d=>{
-       	if(d.customerID!=''){
-       		  alert('성공:'+ d.customerID);
-       		  $('#right_content').empty();
-       		  
-       		  $(compo.emp_register_form()).appendTo('#right_content');
-       	}else{
-       		 alert('실패');
-       	}
-         
-       },
-       error: e=>{
-          alert('실패');
-       }
-   });
-   };
+	   let ok = confirm('사원 입니까?');
+	   if(ok){
+		   let emp_no = prompt('사원번호 입력하세요');
+		   $.getJSON($.ctx()+'/employees',d=>{
+			   if(emp_no==d.employeeID){
+				  $('#right_content').empty();
+				  $(compo.emp_login_form()).appendTo('#right_content');
+				   $('#emp_no').attr('value',d.employeeID);
+				   $('#name').attr('value',d.name);
+				  
+					if($('#name').val()===d.name){
+						$.getScript($.js()+'/customer/cust.js')
+						.done(()=>{
+							cust.list();
+        		        });
+					}else{
+						
+					}//아니면 사원번호가 일치하지 않습니다.
+			   }else{
+				   alert('일치하지않습니다');
+			   }
+		   });
+	   }else{
+		   alert('사원 전용 페이지입니다');
+		   let emp_back = prompt('홈으로 돌아가시겠습니까?');
+		  //사원 전용 페이지입니다
+		   //되돌아가기 버튼이 보인다
+	   }
+   };//let access끝
+  
     return {init:init};
-    
+    	
 })();

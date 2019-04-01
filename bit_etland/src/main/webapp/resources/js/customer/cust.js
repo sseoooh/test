@@ -20,7 +20,7 @@ cust = (()=>{
                 {val:'쇼핑몰', name:'shopping'},
                 {val:'장바구니', name:'basket'},
                 {val:'구매내역', name:'perchase'},
-                {val:'정보수정', name:'modify'}];
+                {val:'정보수정', name:'update'}];
       
        
             $.each(arr,(i,j)=>{
@@ -76,22 +76,49 @@ cust = (()=>{
                         case 'perchase' :
                             $('#right_content').empty();
                             perchase();
-                         
-                           
                             $('form button[type=submit]').click(e=>{
                             	e.preventDefault();
                             	alert('들어옴')	
-                        		
                             });
                             break;
-                     case 'modify' :
+                     case 'update' :
                             $('#right_content').empty();
-                            modify();
-                            
-                           
-                            $('form button[type=submit]').click(e=>{
+                            update();	
+                            $('form button[type=updatebtn]').click(e=>{
+                            	alert('버튼먹음');
+                            	let data = {password:$('form input[name=password]').val(),
+			        						phone:$('form input[name=phone]').val(),
+			        					 	city:$('form input[name=city]').val(),
+			        						address:$('form input[name=address]').val(),
+			        						postalcode:$('form input[name=postalcode]').val()};
+                            	alert('정보확인왜안찍힘?');
+        		
+        		   $.ajax({
+        	           url: $.ctx()+'/users/cust',
+        	           type: 'post',
+        	           data: JSON.stringify(data),
+        	           dataType: 'json',
+        	           contentType: 'application/json; charset=UTF-8',
+        	           success: d=>{
+        	        	  
+        	        	   if(d.msg==='SUCCESS'){	  
+        	        		   alert('정보수정이완료되었습니다:'+ d.msg);
+        	        		   $('#right_content').empty();
+        	        		   $(compo.cust_update()).appendTo('#right_content');           		
+        	           	}else{
+        	           		 alert('정보수정실패');
+        	           		$(compo.cust_update()).appendTo('#right_content');
+        	           		update();
+        	           	}
+        	             
+        	           },
+        	           error: e=>{
+        	              alert('실패');
+        	           }
+        	       });
                             	e.preventDefault();
-                            	alert('들어옴')	
+                            	alert('들어옴')
+                            	
                         		
                             });
                             break;
@@ -116,8 +143,36 @@ cust = (()=>{
 		let perchase=()=>{
 			$(compo.cust_perchase()).appendTo('#right_content');
 		}
-		let modify=()=>{
-			$(compo.cust_modify()).appendTo('#right_content');
+		let update=()=>{
+			$(compo.cust_update()).appendTo('#right_content');
+			alert('업데이트폼 보여줌');
+			
+			
 		};
-		return {init:init};
+		 let list = ()=>{		
+		   $.getJSON($.ctx()+'/cust/page/1',
+			   d=>{
+				   let html = '<table><tr><th>아이디</th></tr>'
+					   			+'<tr><td>이름</td></tr>'
+					   			+'<tr><td>폰번호</td></tr>'
+					   			+'<tr><td>도시</td></tr>'
+					   			+'<tr><td>주소</td></tr>'
+					   			+'<tr><td>우편번호</td></tr>'
+				   $.each(d,(i,j)=>{
+			   html += '<tr><td>'+j.customerID+'</td>'
+						+'<td>'+j.customerName+'</td>'
+						+'<td>'+j.phone+'</td>'
+						+'<td>'+j.ssn+'</td>'
+						+'<td>'+j.city+'</td>'
+						+'<td>'+j.address+'</td>'
+						+'<td>'+j.postalcode+'</td>'
+						+'</tr>'
+				html +='</table>'
+					   $('#right_content').html(html);
+					   
+				   });
+			   });
+		   }
+		return {init:init,
+			list:list};
 	})();
