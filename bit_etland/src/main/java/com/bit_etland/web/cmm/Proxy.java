@@ -31,7 +31,7 @@ System.out.println("전체카운트::::"+rowCount);
 int pageCount = rowCount / pageSize;//페이지
 System.out.println("전체 페이지수:"+pageCount);
 
-startRow = (pageNum -1) * pageSize +1;
+startRow = (pageNum -1) * pageSize; //<================ 끝에 있었음+1
 System.out.println("StartRow"+startRow);
 
 endRow =(rowCount > pageNum * pageSize)? pageNum * pageSize : rowCount;

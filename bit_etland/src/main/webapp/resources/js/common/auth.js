@@ -70,6 +70,7 @@ auth = (()=>{
                             	e.preventDefault();
                             	alert('사원접속');
                             	access();
+                            	emp.empNav();
                             });
                             break;
                         case 'registe' :
@@ -86,7 +87,7 @@ auth = (()=>{
             alert('component/compo.js 를 찾지 못했습니다.');
         });
     };
-    /*ddfd*/
+  
     let login =()=>{
             let data = {customerID:$('form input[name=uname]').val(),
                         password:$('form input[name=psw]').val()};
@@ -97,13 +98,13 @@ auth = (()=>{
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
                 success: d=>{
-                		alert(d.customerID);
                 	if(d.customerID!=''){
                 		 $.getScript($.js()+'/customer/cust.js')
                 		 .done(()=>{
                 		cust.init();
          		        });
-                		  alert('로그인성공:'+ d.customerID);
+                		 alert('로그인성공:'+d.customerID);
+                		 alert('password:'+ d.password);
                 		  /*$('#right_content').empty();*/
                 		  
                 	}else{
@@ -116,6 +117,8 @@ auth = (()=>{
                 }
             });
     };
+   
+    
    let join =()=>{
 	   let data = {customerID:$('form input[name=id]').val(),			   
 			   		customerName:$('form input[name=name]').val(),
@@ -194,20 +197,28 @@ auth = (()=>{
 			   if(emp_no==d.employeeID){
 				  $('#right_content').empty();
 				  $(compo.emp_login_form()).appendTo('#right_content');
+				 
+				  $.getScript($.js()+'/employee/emp.js')
+			        .done(()=>{
+			        	emp.empNav();
+			        });
+				   
 				   $('#emp_no').attr('value',d.employeeID);
 				   $('#name').attr('value',d.name);
-				  
+				   
 					if($('#name').val()===d.name){
 						$.getScript($.js()+'/customer/cust.js')
 						.done(()=>{
 							cust.list();
         		        });
 					}else{
-						
+						   alert('일치하지않습니다');
 					}//아니면 사원번호가 일치하지 않습니다.
 			   }else{
 				   alert('일치하지않습니다');
 			   }
+			   
+				   
 		   });
 	   }else{
 		   alert('사원 전용 페이지입니다');
@@ -217,6 +228,7 @@ auth = (()=>{
 	   }
    };//let access끝
   
-    return {init:init};
+    return {init:init,
+    	access:access};
     	
 })();

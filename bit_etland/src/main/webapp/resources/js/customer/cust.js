@@ -149,30 +149,81 @@ cust = (()=>{
 			
 			
 		};
-		 let list = ()=>{		
+		 let list = ()=>{
+		
 		   $.getJSON($.ctx()+'/cust/page/1',
 			   d=>{
-				   let html = '<table><tr><th>아이디</th></tr>'
-					   			+'<tr><td>이름</td></tr>'
-					   			+'<tr><td>폰번호</td></tr>'
-					   			+'<tr><td>도시</td></tr>'
-					   			+'<tr><td>주소</td></tr>'
-					   			+'<tr><td>우편번호</td></tr>'
-				   $.each(d,(i,j)=>{
-			   html += '<tr><td>'+j.customerID+'</td>'
-						+'<td>'+j.customerName+'</td>'
-						+'<td>'+j.phone+'</td>'
-						+'<td>'+j.ssn+'</td>'
-						+'<td>'+j.city+'</td>'
-						+'<td>'+j.address+'</td>'
-						+'<td>'+j.postalcode+'</td>'
+				   let html = '<table><tr><th>No.</th><p>'
+								+'<th>아이디</th><p>'
+								+'<th>이름</th><p>'
+								+'<th>생년월일</th><p>'
+								+'<th>성별</th><p>'
+								+'<th>전화</th><p>'
+								+'<th>주소</th><p>'
+								+'<th>우편번호</th><p>'
+								+'</tr>'
+				   $.each(d.li,(i,j)=>{
+					   html += '<tr><td>'+j.rownum+'</td><p>'
+						+'<td>'+j.customerID+'</td><p>'
+						+'<td>'+j.customerName+'</td><p>'
+						+'<td>'+j.ssn+'</td><p>'
+						+'<td>'+'남'+'</td><p>'
+						+'<td>'+j.phone+'</td><p>'
+						+'<td>'+j.address+'</td><p>'
+						+'<td>'+j.postalcode+'</td><p>'
 						+'</tr>'
-				html +='</table>'
-					   $('#right_content').html(html);
-					   
 				   });
+						/*html += '</table>'*/
+					
+					 $('#right_content').html(html)
+					 /*
+					   .addClass('pagination center')
+						alert('여기까지');
+						
+						$('<div style="height: 50px"></div>')
+						.appendTo('#');
+						
+						html = '<div class="pagination">';
+						if(pagination.existPrev){
+							html += '<a href="${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagination.prevBlock}">&laquo;</a>'
+						}
+						let i=0;
+						for(i=0;i<5;i++){
+							if(pagination.pageNum == status.index){
+								'<a href="#"class="page active">${status.index}</a>'
+							}else
+								 '<a href="#"class="page">${status.index}</a>'
+						}*/
+			  
+			   /* <div style="height: 50px"></div>
+   <div class="center">
+     <div class="pagination">
+     <form id="form" name="form">
+    <c:if test="${pagination.existPrev}">
+         <a href='${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagination.prevBlock}'>&laquo;</a>
+     </c:if>
+     <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" varStatus="status">
+     <c:choose>
+       <c:when test="${pagination.pageNum eq status.index}" >
+           <a href="#"class='page active'>${status.index}</a>
+       </c:when>
+       <c:otherwise>
+           <a href="#"class='page'>${status.index}</a>
+       </c:otherwise>
+     </c:choose>
+     </c:forEach>
+     <c:if test="${pagination.existNext}">
+       <a href='${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagination.nextBlock}' >&raquo;</a>
+     </c:if>
+     </form>
+     </div>
+   </div>.
+			   */
+				  
 			   });
-		   }
+		   
+		   
+		   };
 		return {init:init,
 			list:list};
 	})();

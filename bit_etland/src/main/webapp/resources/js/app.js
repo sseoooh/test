@@ -28,4 +28,4 @@ app.$ = {
 				app.onCreate();
 			})
 		}
-	};
+};

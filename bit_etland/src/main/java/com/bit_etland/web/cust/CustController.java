@@ -82,9 +82,9 @@ public class CustController {
 		return map;
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	@GetMapping("/cust/page/{page}")
-	public List<Customer> list(			
+	public Map<?,?> list(			
 			@PathVariable String page) {
 		map.clear();
 		map.put("page_num", "1");
@@ -93,7 +93,13 @@ public class CustController {
 		map.put("total+count", "");
 		pxy.carryOut(map);
 		IFunction i = (Object o) -> custMap.selectCustomers(pxy);
-		List<Customer> li = (List<Customer>) i.apply(pxy);
-		return li;
+		List<?> li = (List<?>) i.apply(pxy);
+		map.clear();
+		map.put("li", li);
+		map.put("pxy", pxy);
+		System.out.println("li::::"+li);
+		System.out.println("pxy::::"+pxy);
+		
+		return map;
 	}
 };

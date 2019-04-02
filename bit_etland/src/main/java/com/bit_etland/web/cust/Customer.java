@@ -1,10 +1,11 @@
 package com.bit_etland.web.cust;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
-@Data @Component
+@Data @Component @Lazy
 public class Customer {
 	private String  customerID, customerName, password, ssn, phone,
 	photo, city, address, postalcode;
