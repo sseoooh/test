@@ -43,7 +43,11 @@ emp = (()=>{
 	                              	alert('들어옴');
 	                              });*/
 	                        	break;
-	                        case 'prodList' : break;
+	                        case 'prodList' : 
+	                        $('#right_content').empty();
+	                        /*e.preventDefault();*/
+                            	prod.plist(1);
+	                        break;
 	                        case 'prodModify' : break;
 	                        case 'prodDelete' :	break;
 	                        case 'prodAll' :	break;
@@ -53,6 +57,7 @@ emp = (()=>{
 	            
 	        });
 		    }
+		
 		
 	    
 		return{init:init,empNav:empNav};

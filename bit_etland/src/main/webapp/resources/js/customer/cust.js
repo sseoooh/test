@@ -146,84 +146,79 @@ cust = (()=>{
 		let update=()=>{
 			$(compo.cust_update()).appendTo('#right_content');
 			alert('업데이트폼 보여줌');
-			
-			
 		};
-		 let list = ()=>{
 		
-		   $.getJSON($.ctx()+'/cust/page/1',
-			   d=>{
-				   let html = '<table><tr><th>No.</th><p>'
-								+'<th>아이디</th><p>'
-								+'<th>이름</th><p>'
-								+'<th>생년월일</th><p>'
-								+'<th>성별</th><p>'
-								+'<th>전화</th><p>'
-								+'<th>주소</th><p>'
-								+'<th>우편번호</th><p>'
-								+'</tr>'
-				   $.each(d.li,(i,j)=>{
-					   html += '<tr><td>'+j.rownum+'</td><p>'
-						+'<td>'+j.customerID+'</td><p>'
-						+'<td>'+j.customerName+'</td><p>'
-						+'<td>'+j.ssn+'</td><p>'
-						+'<td>'+'남'+'</td><p>'
-						+'<td>'+j.phone+'</td><p>'
-						+'<td>'+j.address+'</td><p>'
-						+'<td>'+j.postalcode+'</td><p>'
-						+'</tr>'
-				   });
-						/*html += '</table>'*/
-					
-					 $('#right_content').html(html)
-					 /*
-					   .addClass('pagination center')
-						alert('여기까지');
-						
-						$('<div style="height: 50px"></div>')
-						.appendTo('#');
-						
-						html = '<div class="pagination">';
-						if(pagination.existPrev){
-							html += '<a href="${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagination.prevBlock}">&laquo;</a>'
-						}
-						let i=0;
-						for(i=0;i<5;i++){
-							if(pagination.pageNum == status.index){
-								'<a href="#"class="page active">${status.index}</a>'
-							}else
-								 '<a href="#"class="page">${status.index}</a>'
-						}*/
-			  
-			   /* <div style="height: 50px"></div>
-   <div class="center">
-     <div class="pagination">
-     <form id="form" name="form">
-    <c:if test="${pagination.existPrev}">
-         <a href='${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagination.prevBlock}'>&laquo;</a>
-     </c:if>
-     <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" varStatus="status">
-     <c:choose>
-       <c:when test="${pagination.pageNum eq status.index}" >
-           <a href="#"class='page active'>${status.index}</a>
-       </c:when>
-       <c:otherwise>
-           <a href="#"class='page'>${status.index}</a>
-       </c:otherwise>
-     </c:choose>
-     </c:forEach>
-     <c:if test="${pagination.existNext}">
-       <a href='${ctx}/customer.do?cmd=cust_list&page=list&page_num=${pagination.nextBlock}' >&raquo;</a>
-     </c:if>
-     </form>
-     </div>
-   </div>.
-			   */
-				  
+let list =(x)=>{
+	$('#right_content').empty();
+   $.getJSON($.ctx()+'/cust/page/'+x,d=>{
+	   		alert('x의값'+x);
+	   		alert('d의값'+d);
+		   $('<div class="grid-item" id="content_1">'
+			+'<h1><font style="font-size: 20px;margin: 0 auto;">고객 목록</font>'
+			+'</h1>'
+		    +'</div>'
+		    +'<div class="grid-item" id="content_2"></div>')
+		    .appendTo('#right_content');
+		let table ='<table><tr><th>No.</th>'
+					+'<th>아이디</th>'
+					+'<th>이름</th>'
+					+'<th>생년월일</th>'
+					+'<th>성별</th>'
+					+'<th>전화</th>'
+					+'<th>주소</th>'
+					+'<th>우편번호</th>'
+					+'</tr>'
+			   $.each(d.li,(i,j)=>{
+				   table += '<tr><td>'+j.rownum+'</td>'
+					+'<td>'+j.customerID+'</td>'
+					+'<td>'+j.customerName+'</td>'
+					+'<td>'+j.ssn+'</td>'
+					+'<td>'+'남'+'</td>'
+					+'<td>'+j.phone+'</td>'
+					+'<td>'+j.address+'</td>'
+					+'<td>'+j.postalCode+'</td>'
+					+'</tr>'
 			   });
-		   
-		   
-		   };
-		return {init:init,
-			list:list};
-	})();
+				table += '</table>'
+					$(table)
+					.attr('id','cust_tab')
+					.addClass('pagination center')
+					.appendTo('#content_2');
+   
+			let pxy = d.pxy;
+			let ul = '<nav aria-label="Page navigation" style="width:400px;margin: 0 auto;"><ul id="ul" class="pagination"></ul></nav>';
+			$(ul).appendTo('#content_2');
+
+			
+			let i = 0;
+			for(i=pxy.startPage; i<=pxy.endPage; i++){
+				if(pxy.pageNum == i){
+					$('<li><a class="page active">'+i+'</a></li>')
+					.attr('href','$.ctx()/customers/page/'+i)
+					.appendTo('#ul')
+					.click(function(){
+						list($(this).text());
+					});
+				}else{
+					$('<li><a class="page">'+i+'</a></li>')
+					.attr('href','$.ctx()/customers/page/'+i)
+					.appendTo('#ul')
+					.click(function(){
+						list($(this).text());
+					});
+				}
+			}
+			if(pxy.existNext){
+				$('<li><a>&raquo;</a></li>')
+				.appendTo('#ul')
+				.click(function(){
+					list(pxy.nextBlock);
+				});
+			}
+			
+		});
+		
+	};
+	return {init:init,
+		list:list};
+})();

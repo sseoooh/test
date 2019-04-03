@@ -25,7 +25,7 @@ String _pageSize = (String)paramMap.get("page_size");
 pageSize = (_pageSize == null) ? 5 : Integer.parseInt(_pageSize);
 System.out.println("Pagination안에 페이지사이즈"+pageSize);
 		
-rowCount = 0;/* CustomerServiceImpl.getInstance().countCustomer(null);*/
+rowCount = (int) paramMap.get("rowCount");
 System.out.println("전체카운트::::"+rowCount);
 
 int pageCount = rowCount / pageSize;//페이지
@@ -41,6 +41,7 @@ System.out.println("앤드로우::::"+endRow);
 
 if(existPrev) {
 	startPage = (pageNum-1)/blockSize*blockSize+1;
+	
 }else {
 	startPage = 1;
 }

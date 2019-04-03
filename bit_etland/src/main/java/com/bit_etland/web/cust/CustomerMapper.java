@@ -15,7 +15,7 @@ import com.bit_etland.web.cmm.Proxy;
 		public List<Customer> selectAllCustomersList(Map<?,?> m);
 		public List<?> selectCustomers(Proxy pxy);
 		public Customer selectCustomer(Customer cust);
-		public int countCustomer(Map<?,?> m);
+		public int countCustomer();
 		
 		public void updateCustomer(Customer cust);
 		public Map<String, Object> selectProfile(Map<?,?> m);

@@ -209,7 +209,7 @@ auth = (()=>{
 					if($('#name').val()===d.name){
 						$.getScript($.js()+'/customer/cust.js')
 						.done(()=>{
-							cust.list();
+							cust.list(1);
         		        });
 					}else{
 						   alert('일치하지않습니다');

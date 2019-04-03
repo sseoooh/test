@@ -93,4 +93,8 @@
 		  statementType="PREPARED"
 		  timeout="20">
  </delete>
+ 
+  <select id="countCustomer" resultType="int">
+  		SELECT COUNT(*) FROM CUSTOMERS
+  </select>
 </mapper>
