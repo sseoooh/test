@@ -3,8 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
-<!--  customerID, customerName, password, ssn, phone,
-	photo, photo, address, postalcode; -->
+
 <resultMap id="result" type="hashmap">
   <id property="customerID" column="CUSTOMER_ID" />
   <result property="customerName" column="CUSTOMER_NAME"/>

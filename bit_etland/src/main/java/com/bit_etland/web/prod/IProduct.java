@@ -1,5 +1,8 @@
 package com.bit_etland.web.prod;
 
-public class IProduct {
+import org.springframework.stereotype.Repository;
 
+@Repository
+public class IProduct {
+	
 }

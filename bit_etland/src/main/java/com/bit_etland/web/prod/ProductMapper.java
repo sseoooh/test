@@ -10,14 +10,14 @@ import com.bit_etland.web.cmm.Proxy;
 @Repository
 public interface ProductMapper {
 
-	
+	public void insertProduct(Product prod);
 	public List<Product> selectProductsList(Map<?,?> m);
 	public List<?> selectProducts(Proxy pxy);
-	public Product selectProduct(Product pro);
-	public int countProduct();
-	public boolean existsProductID(Product pro);
-	public void updateProduct(Product pro);
+	public Product selectProduct(Product prod);
+	public int countProduct(Map<?,?> m);
+	public int countAllProducts();
+	public void updateProduct(Product prod);
 	public Map<String, Object> selectProfile(Map<?,?> m);
-	public void deleteProduct(Product pro);
+	public void deleteProduct(Product prod);
 	public Map<String, Object> selectPhone(Map<?,?> m);
 }

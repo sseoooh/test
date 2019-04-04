@@ -15,16 +15,20 @@
 </resultMap>
 
   <select id="selectProducts"
-  		   resultMap="result"
+  		  resultType="com.bit_etland.web.prod.Product"
   		  parameterType="com.bit_etland.web.cmm.Proxy">
-	SELECT @ROWNUM:=@ROWNUM+1 AS rownum,
-                C.*
-        FROM PRODUCTS C,(SELECT @ROWNUM:=0) TMP
-        ORDER BY rownum DESC
-        LIMIT #{startRow},#{pageSize}
+			SELECT product_id productID,
+			product_name productName,
+			supplier_id supplierID,
+			category_id categoryID,
+			unit,
+			price
+       		FROM PRODUCTS
   </select>
-  <select id="countProduct" resultType="int">
+  
+  <select id="countAllProducts" resultType="int">
   		SELECT COUNT(*) FROM PRODUCTS
   </select>
+  
   
 </mapper>

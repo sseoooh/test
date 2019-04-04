@@ -9,6 +9,9 @@ emp = (()=>{
 			
 			});*/
 			setContentView();
+			$('#srch_btn').on('click',()=>{
+				alert('테스트');
+			})
 		};
 		let setContentView =()=>{
 			
@@ -16,6 +19,7 @@ emp = (()=>{
 		let empNav=()=>{
 			$.getScript($.js()+'/component/compo.js')
 	        .done(()=>{
+	        	
 	        	$('#left_content ul').empty();
 	        	$('#left_content h4').html('고객목록');
 	            let arr = [
@@ -37,6 +41,7 @@ emp = (()=>{
 	                        case 'prodRegister' :
 	                        	$('#right_content').empty();
 	                        	$(compo.prod_register()).appendTo('#right_content');
+	                        	prod.prodRegister();
 	                        	/*$('form button[type=submit]').click(e=>{
 	                              	e.preventDefault();
 	                              	$(compo.prod_register()).appendTo('#right_content');
@@ -57,7 +62,9 @@ emp = (()=>{
 	            
 	        });
 		    }
-		
+		let srch=()=>{
+			
+		}
 		
 	    
 		return{init:init,empNav:empNav};

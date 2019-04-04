@@ -24,29 +24,43 @@ System.out.println("Pagination안에 페이지넘버"+pageNum);
 String _pageSize = (String)paramMap.get("page_size");
 pageSize = (_pageSize == null) ? 5 : Integer.parseInt(_pageSize);
 System.out.println("Pagination안에 페이지사이즈"+pageSize);
+
+String _blockSize = (String) paramMap.get("block_size");
+blockSize = ((String) paramMap.get("block_Size") == null) ? 5 : Integer.parseInt(_blockSize);
 		
 rowCount = (int) paramMap.get("rowCount");
 System.out.println("전체카운트::::"+rowCount);
 
-int pageCount = rowCount / pageSize;//페이지
+int nmg = rowCount % pageSize;
+int pageCount = (nmg == 0) ? rowCount / pageSize : rowCount / pageSize + 1;
+
 System.out.println("전체 페이지수:"+pageCount);
 
 startRow = (pageNum -1) * pageSize; //<================ 끝에 있었음+1
 System.out.println("StartRow"+startRow);
 
 endRow =(rowCount > pageNum * pageSize)? pageNum * pageSize : rowCount;
+
+int blocknum = (pageNum - 1) / blockSize;
+
 System.out.println("endRow"+endRow);
 System.out.println("스타트로우는::::"+startRow);
 System.out.println("앤드로우::::"+endRow);
 
-if(existPrev) {
-	startPage = (pageNum-1)/blockSize*blockSize+1;
-	
-}else {
-	startPage = 1;
+if (existPrev) {
+    startPage = blocknum * blockSize + 1;
+
+} else {
+    startPage = 1;
+}
+endPage = startPage + (blockSize - 1);
+startPage = pageNum - ((pageNum - 1) % blockSize);
+endPage = startPage + (blockSize - 1);
+if (endPage > pageCount) {
+    endPage = pageCount;
 }
 
-endPage = startPage + 4;
+
 
 
 existPrev = (startPage - pageSize) > 0;

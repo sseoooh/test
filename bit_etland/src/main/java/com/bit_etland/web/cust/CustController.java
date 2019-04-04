@@ -87,9 +87,10 @@ public class CustController {
 	@GetMapping("/cust/page/{page}")
 	public Map<?,?> list(
 			@PathVariable String page) {
+		
 		ISupplier s = ()-> custMap.countCustomer(); 
 		map.clear();
-		map.put("page_num", "1"); //page
+		map.put("page_num", page); //page
 		map.put("page_size", "5");
 		map.put("block_size", "5");
 		map.put("rowCount", s.get());
@@ -99,6 +100,7 @@ public class CustController {
 		map.clear();
 		map.put("li", li);
 		map.put("pxy", pxy);
+		System.out.println("s.get값"+s.get());
 		System.out.println("li::::"+li);
 		System.out.println("pxy::::"+pxy);
 		

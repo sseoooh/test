@@ -12,6 +12,11 @@ cust = (()=>{
 		        .done(()=>{
 		        	 $('#right_content').empty();
 		        	mypage();
+		        	
+		        	 $('#srch_btn').click(e=>{//로그인하고들어와서 검색하면 상품보임
+                 		e.preventDefault();
+                 	prod.showlist($('#srchInput').val());
+                 	});
 		        
 		        $('#left_content ul').empty();
             let arr = [
@@ -29,6 +34,10 @@ cust = (()=>{
                     .addClass('cursor')
                     .appendTo('#left_content ul')
                     .click(function(){
+                    	/* $('div button[type=button]').click(e=>{
+  		                 	e.preventDefault();
+  		                 	alert('들어옴')	
+  		                 });*/
                 
                         let that = $(this).attr('name');
                         $(this).addClass('active');
@@ -38,10 +47,7 @@ cust = (()=>{
                             $('#right_content').empty();
                             mypage();
                          
-                            $('form button[type=submit]').click(e=>{  
-                        		e.preventDefault();
-                        		
-                        		});
+                           
                             
                             break;
                         case 'leave' :
@@ -130,30 +136,31 @@ cust = (()=>{
 		
 		let mypage=()=>{
 			  $(compo.cust_mypage()).appendTo('#right_content');
-		}
+		};
 		let leave=()=>{
 			$(compo.cust_leave()).appendTo('#right_content');
-		}
+		};
 		let shopping=()=>{
 			$(compo.prod_post()).appendTo('#right_content');
-		}
+		};
 		let basket=()=>{
 			$(compo.cust_basket()).appendTo('#right_content');
-		}
+		};
 		let perchase=()=>{
 			$(compo.cust_perchase()).appendTo('#right_content');
-		}
+		};
 		let update=()=>{
 			$(compo.cust_update()).appendTo('#right_content');
 			alert('업데이트폼 보여줌');
 		};
 		
+		
 let list =(x)=>{
 	$('#right_content').empty();
    $.getJSON($.ctx()+'/cust/page/'+x,d=>{
-	   		alert('x의값'+x);
-	   		alert('d의값'+d);
-		   $('<div class="grid-item" id="content_1">'
+	   		/*alert('x의값'+x);
+	   		alert('d의값'+d);*/
+		   $('<div class="grid-item" id="content_2">'
 			+'<h1><font style="font-size: 20px;margin: 0 auto;">고객 목록</font>'
 			+'</h1>'
 		    +'</div>'
@@ -176,7 +183,7 @@ let list =(x)=>{
 					+'<td>'+'남'+'</td>'
 					+'<td>'+j.phone+'</td>'
 					+'<td>'+j.address+'</td>'
-					+'<td>'+j.postalCode+'</td>'
+					+'<td>'+j.postalcode+'</td>'
 					+'</tr>'
 			   });
 				table += '</table>'

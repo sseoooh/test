@@ -1,14 +1,23 @@
 package com.bit_etland.web.prod;
 
 
+import java.util.List;
+
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-
 
 import lombok.Data;
 
-@Data @Component
+@Data @Component @Lazy
 public class Product {
-	private String productID, productName, supplierID, categoryID,
-	unit, price, productImage;
+	private String productID,
+	productName,
+	supplierID,
+	categoryID,
+	unit,
+	color,
+	comment,
+	price;
+	
+	private List<String> freebies;
 }
