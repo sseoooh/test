@@ -88,11 +88,11 @@ public class CustController {
 	public Map<?,?> list(
 			@PathVariable String page) {
 		
-		ISupplier s = ()-> custMap.countCustomer(); 
 		map.clear();
 		map.put("page_num", page); //page
 		map.put("page_size", "5");
 		map.put("block_size", "5");
+		ISupplier s = ()-> custMap.countCustomer(); 
 		map.put("rowCount", s.get());
 		pxy.carryOut(map);
 		IFunction i = (Object o) -> custMap.selectCustomers(pxy);

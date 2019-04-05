@@ -1,19 +1,30 @@
 package com.bit_etland.web.cmm;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileItemFactory;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
-@Component @Data @Lazy 
+@Data @Component @Lazy
 public class Proxy {
 	private int pageNum, pageSize, blockSize,
 	startRow, endRow, startPage, endPage,
 	prevBlock, nextBlock, rowCount;
+	private String search;
 	
 	private boolean existPrev, existNext;
+	@Autowired Image img;
 	
 	public void carryOut(Map<?,?> paramMap) {
 		
@@ -60,17 +71,40 @@ if (endPage > pageCount) {
     endPage = pageCount;
 }
 
-
-
-
 existPrev = (startPage - pageSize) > 0;
 existNext = (startPage + pageSize) <= pageCount;		
 prevBlock = startRow - pageSize;
 nextBlock = startRow + pageSize;
-
+search = (String) paramMap.get("search");
 
 	}
-	}
+	public void fileUpload(String customerID) {
+		FileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setFileSizeMax(1024 * 1024 * 40); // 40 MB
+		upload.setSizeMax(1024 * 1024 * 50); // 50 MB
+		List<FileItem> items = null;
+		try {
+			File file = null;
+			// items = upload.parseRequest((RequestContext) new ServletRequestContext(request));
+			Iterator<FileItem> it = items.iterator();
+			while(it.hasNext()) {
+				FileItem item = it.next();
+				if(!item.isFormField()) {
+					String fileName = item.getName();
+					file = new File(""+fileName);
+					item.write(file);
+					img.setImgName(fileName.substring(0,fileName.indexOf(".")));
+					img.setImgExtention(fileName.substring(fileName.indexOf(".")+1));
+					img.setOwner(customerID);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+}
+
 
 
 

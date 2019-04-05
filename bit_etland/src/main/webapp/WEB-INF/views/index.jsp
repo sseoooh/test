@@ -49,7 +49,7 @@
         <li><a href="#section3">Family</a></li>
         <li><a href="#section3">photo</a></li>
       </ul><br>
-      <div class="input-group">
+      <div class="srch_grp">
         <input id="srchInput" type="text" class="form-control" placeholder="상품검색">
         <span class="input-group-btn">
           <button id="srch_btn" class="btn btn-default" type="submit">
@@ -135,6 +135,7 @@
 <script src="<%=application.getContextPath()%>/resources/js/common/auth.js"></script>
 <script src="<%=application.getContextPath()%>/resources/js/prod/prod.js"></script>
 <script src="<%=application.getContextPath()%>/resources/js/common/utill.js"></script>
+<script src="<%=application.getContextPath()%>/resources/js/prod/fileupload.js"></script>
 <script>
 app.init('<%=application.getContextPath()%>');
 </script>	

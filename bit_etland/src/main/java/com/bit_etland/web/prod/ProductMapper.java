@@ -16,8 +16,11 @@ public interface ProductMapper {
 	public Product selectProduct(Product prod);
 	public int countProduct(Map<?,?> m);
 	public int countAllProducts();
+	public List<?> retrieveProducts(Proxy pxy);
 	public void updateProduct(Product prod);
 	public Map<String, Object> selectProfile(Map<?,?> m);
 	public void deleteProduct(Product prod);
 	public Map<String, Object> selectPhone(Map<?,?> m);
+	public List<?> searchProducts(Proxy pxy);
+	public int countSearchProducts();
 }

@@ -3,8 +3,11 @@ package com.bit_etland.web.prod;
 
 
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +17,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.bit_etland.web.cate.Category;
 import com.bit_etland.web.cate.CategoryMapper;
@@ -44,6 +51,7 @@ public class ProductController {
 	@Autowired SupplierMapper suppMap;
 	@Autowired Category cate;
 	@Autowired Supplier supp;
+	@Resource(name = "uploadPath")private String uploadPath;
 	
 	@GetMapping("/prod/page/{page}")
 	public Map<?,?> plist(			
@@ -88,13 +96,46 @@ public class ProductController {
 	@GetMapping("/showlist/{search}")
 	public Map<?,?> showList(
 			@PathVariable String search) {
+		ISupplier s = () -> prodMap.countAllProducts();
+		map.put("s", s.get());
 		System.out.println("plist값::"+search);
 		IFunction c = o -> prodMap.selectProducts(pxy);
 		@SuppressWarnings("unchecked")
 		List<Product> li= (List<Product>) c.apply(search);
 		map.clear();
 		map.put("li", li);
+		System.out.println("s의값:::::::::"+s.get());
+		System.out.println("li의값:::::::::"+li);
+		System.out.println("pxy값::"+pxy);
 		return map;
+	}
+	/*@GetMapping("$.ctx()+'/showlist/{page}")
+	public Map<?, ?> grid(
+            @PathVariable String search,
+            @PathVariable String page) {
+        logger.info("=========프로덕트 그리드진입======");
+        map.clear();
+        map.put("search", search);
+        map.put("page_num", page);
+        map.put("page_size", 9);
+        pxy.carryOut(map);
+        map.clear();
+        map.put("li", prodMap.retrieveProducts(pxy));
+        map.put("pxy", pxy);
+        return map;
+    }*/
+	@RequestMapping(value="/showlist/file", method=RequestMethod.POST)
+	public Map<?,?> fileUpload(
+			MultipartHttpServletRequest req)throws Exception{
+		Iterator<String> it = req.getFileNames();
+		if(it.hasNext()) {
+			MultipartFile mf = req.getFile(it.next());
+			ps.accept("넘어온 파일명:"+mf.getName());
+		}
+			
+			ps.accept("파일 저장 경로:"+uploadPath);
+		return map;
+		
 	}
 };
 

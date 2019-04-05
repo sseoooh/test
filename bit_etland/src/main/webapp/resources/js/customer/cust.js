@@ -19,6 +19,8 @@ cust = (()=>{
                  	});
 		        
 		        $('#left_content ul').empty();
+		        $('#srchInput').show();
+	        	$('#srch_btn').show();
             let arr = [
                 {val:'마이페이지', name:'mypage'},
                 {val:'회원탈퇴', name:'leave'},
@@ -156,11 +158,10 @@ cust = (()=>{
 		
 		
 let list =(x)=>{
+	/*alert('x의값'+x);*/
 	$('#right_content').empty();
    $.getJSON($.ctx()+'/cust/page/'+x,d=>{
-	   		/*alert('x의값'+x);
-	   		alert('d의값'+d);*/
-		   $('<div class="grid-item" id="content_2">'
+		   $('<div class="grid-item" id="content_1">'
 			+'<h1><font style="font-size: 20px;margin: 0 auto;">고객 목록</font>'
 			+'</h1>'
 		    +'</div>'
@@ -186,16 +187,30 @@ let list =(x)=>{
 					+'<td>'+j.postalcode+'</td>'
 					+'</tr>'
 			   });
-				table += '</table>'
-					$(table)
-					.attr('id','cust_tab')
-					.addClass('pagination center')
-					.appendTo('#content_2');
+		table += '</table>'
+			$(table)
+			.attr('id','cust_tab')
+			.css({'font-family':'arial, sans-serif',
+				'border-collapse':'collapse',
+				'width':'100%',
+				'text-align': 'center',
+				'display': 'inline-block'
+				
+			})
+			.addClass('pagination center')
+			.appendTo('#content_2');
    
 			let pxy = d.pxy;
 			let ul = '<nav aria-label="Page navigation" style="width:400px;margin: 0 auto;"><ul id="ul" class="pagination"></ul></nav>';
 			$(ul).appendTo('#content_2');
 
+			if(pxy.existPrev){
+				$('<li><a>&laquo;</a></li>')
+				.appendTo('#ul')
+				.click(function(){
+					list(pxy.prevBlock);
+				});
+			}
 			
 			let i = 0;
 			for(i=pxy.startPage; i<=pxy.endPage; i++){
@@ -219,7 +234,9 @@ let list =(x)=>{
 				$('<li><a>&raquo;</a></li>')
 				.appendTo('#ul')
 				.click(function(){
+					alert('pxy.nextBlock::::::::::::::'+pxy.nextBlock);
 					list(pxy.nextBlock);
+					
 				});
 			}
 			

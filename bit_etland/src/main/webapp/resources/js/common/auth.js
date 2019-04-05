@@ -28,9 +28,13 @@ auth = (()=>{
         		e.preventDefault();
         		login();
         		});
-
+        	
         	$('#left_content ul').empty();
+        	
         	$('#left_content h4').html('전서우 고객님 접속중');
+        	$('#srchInput').hide();
+        	$('#srch_btn').hide();
+        	
             let arr = [
                 {val:'회원 로그인', name:'login'},
                 {val:'회원 가입', name:'join'},
